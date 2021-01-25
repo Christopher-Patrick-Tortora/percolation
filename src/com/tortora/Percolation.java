@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 public class Percolation {
     private final WeightedQuickUnionUF wqu;
     private final boolean[] grid;
-    private int openSites = 0;
+    private double openSites = 0;
     private final int gridSize;
 
     // creates n-by-n grid, with all sites initially blocked
@@ -32,45 +32,30 @@ public class Percolation {
                 grid[xyTo1D(row, col)] = true;
                 openSites++;
             }
-        if (withinGrid(row - 1,col - 1)) {
-            if (grid[xyTo1D(row - 1, col - 1)]) {
+        if (withinGrid(row - 1,col - 1) && grid[xyTo1D(row - 1, col - 1)]) {
                 wqu.union(xyTo1D(row, col) + 1, xyTo1D(row - 1, col - 1) + 1);
-            }
         }
-        if (withinGrid(row - 1,col )) {
-            if (grid[xyTo1D(row - 1, col)]) {
+        if (withinGrid(row - 1,col ) && grid[xyTo1D(row - 1, col)]) {
                         wqu.union(xyTo1D(row, col) + 1,xyTo1D(row - 1, col) + 1);
-                    }
         }
-        if (withinGrid(row - 1,col + 1)) {
-            if (grid[xyTo1D(row - 1, col + 1)]) {
+        if (withinGrid(row - 1,col + 1) && grid[xyTo1D(row - 1, col + 1)]) {
                         wqu.union(xyTo1D(row, col) + 1,xyTo1D(row - 1, col + 1) + 1);
-                    }
         }
-        if (withinGrid(row ,col - 1)) {
-            if (grid[xyTo1D(row, col - 1)]) {
+        if (withinGrid(row ,col - 1) && grid[xyTo1D(row, col - 1)]) {
                         wqu.union(xyTo1D(row, col) + 1,xyTo1D(row, col - 1) + 1);
-                    }
         }
-        if (withinGrid(row ,col +1 )) {
-            if (grid[xyTo1D(row, col + 1)]) {
+        if (withinGrid(row ,col +1 ) && grid[xyTo1D(row, col + 1)]) {
                         wqu.union(xyTo1D(row, col) + 1,xyTo1D(row, col + 1) + 1);
-                    }
         }
-        if (withinGrid(row + 1,col  - 1)) {
-            if (grid[xyTo1D(row + 1, col - 1)]) {
+        if (withinGrid(row + 1,col  - 1) && grid[xyTo1D(row + 1, col - 1)]) {
                         wqu.union(xyTo1D(row, col) + 1,xyTo1D(row + 1, col - 1) + 1);
-                    }
         }
-        if (withinGrid(row + 1, col)) {
-            if (grid[xyTo1D(row + 1, col)]) {
+        if (withinGrid(row + 1, col) && grid[xyTo1D(row + 1, col)]) {
+
                         wqu.union(xyTo1D(row, col) + 1,xyTo1D(row + 1, col) + 1);
-                    }
         }
-        if (withinGrid(row + 1, col + 1)) {
-            if (grid[xyTo1D(row + 1, col + 1)]) {
+        if (withinGrid(row + 1, col + 1) && grid[xyTo1D(row + 1, col + 1)]) {
                         wqu.union(xyTo1D(row,col) + 1,xyTo1D(row + 1, col + 1) + 1);
-                    }
         }
     }
 
@@ -87,8 +72,12 @@ public class Percolation {
     }
 
     // returns the number of open sites
-    public int numberOfOpenSites() {
+    public double numberOfOpenSites() {
         return openSites;
+    }
+
+    public int getGridSize(){
+        return gridSize;
     }
 
     // does the system percolate?
@@ -112,8 +101,11 @@ public class Percolation {
         return i >= 0 && i < grid.length;
     }
 
+
     // test client (optional)
     public static void main(String[] args) {
+
+
     }
 }
 
