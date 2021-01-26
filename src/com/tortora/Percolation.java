@@ -31,6 +31,7 @@ public class Percolation {
             if (isFull(row, col)) {
                 grid[xyTo1D(row, col)] = true;
                 openSites++;
+
             }
         if (withinGrid(row - 1,col - 1) && grid[xyTo1D(row - 1, col - 1)]) {
                 wqu.union(xyTo1D(row, col) + 1, xyTo1D(row - 1, col - 1) + 1);
@@ -101,11 +102,9 @@ public class Percolation {
         return i >= 0 && i < grid.length;
     }
 
-
     // test client (optional)
     public static void main(String[] args) {
-
-
+    Percolation percolation = new Percolation(2);
     }
 }
 

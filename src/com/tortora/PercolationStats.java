@@ -2,8 +2,7 @@ package com.tortora;
 
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
-
-import java.lang.reflect.Array;
+import edu.princeton.cs.algs4.Stopwatch;
 
 public class PercolationStats {
     private double stddev;
@@ -12,6 +11,7 @@ public class PercolationStats {
 
     // perform independent trials on an n-by-n grid
     public PercolationStats(int n, int trials) {
+        Stopwatch stopwatch = new Stopwatch();
         if (n <= 0 || trials <= 0){
             throw new IllegalArgumentException("n or trials must be greater than 0");
         }
@@ -33,6 +33,7 @@ public class PercolationStats {
         System.out.println("stddev                      = " + stddev());
         System.out.println("95% confidence interval     = [" + confidenceLo() +
                                                         ", " + confidenceHi() + "]");
+        System.out.println("Algorithm runtime           = " + stopwatch.elapsedTime());
     }
 
     // sample mean of percolation threshold
