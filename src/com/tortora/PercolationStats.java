@@ -6,8 +6,10 @@ import edu.princeton.cs.algs4.Stopwatch;
 
 public class PercolationStats {
     private double stddev;
-    private final double trials;
+    private double trials;
     private final double[] thresholdArray;
+    private static final double confidence95 = 1.96;
+    private final double elapsedTime;
 
     // perform independent trials on an n-by-n grid
     public PercolationStats(int n, int trials) {
@@ -15,25 +17,25 @@ public class PercolationStats {
         if (n <= 0 || trials <= 0){
             throw new IllegalArgumentException("n or trials must be greater than 0");
         }
-        Percolation percolation = new Percolation(n);
+
         this.trials = trials;
         thresholdArray = new double[trials];
+        System.out.println(n);
 
         for (int i = 0; i < trials; i++) {
+            Percolation percolation = new Percolation(n);
             while (!percolation.percolates()) {
-                int x = StdRandom.uniform(0, n);
-                int y = StdRandom.uniform(0, n);
+                int x = StdRandom.uniform(1, n + 1);
+                int y = StdRandom.uniform(1, n + 1);
                 percolation.open(x, y);
+                System.out.println(x + " " + y);
             }
-            double threshold = percolation.numberOfOpenSites() / percolation.getGridSize();
+            double threshold = (double) percolation.numberOfOpenSites() / (n * n);
             thresholdArray[i] = threshold;
         }
+        elapsedTime = stopwatch.elapsedTime();
 
-        System.out.println("mean                        = " + mean());
-        System.out.println("stddev                      = " + stddev());
-        System.out.println("95% confidence interval     = [" + confidenceLo() +
-                                                        ", " + confidenceHi() + "]");
-        System.out.println("Algorithm runtime           = " + stopwatch.elapsedTime());
+
     }
 
     // sample mean of percolation threshold
@@ -49,23 +51,47 @@ public class PercolationStats {
 
     // low endpoint of 95% confidence interval
     public double confidenceLo() {
-        return mean() - ((1.96 * stddev) / Math.sqrt(trials));
+        return mean() - ((confidence95 * stddev) / Math.floor(Math.sqrt(trials)));
     }
 
     // high endpoint of 95% confidence interval
     public double confidenceHi() {
-        return mean() + ((1.96 * stddev) / Math.sqrt(trials));
+        return mean() + ((confidence95 * stddev) / Math.floor(Math.sqrt(trials)));
     }
 
     // test client (see below)
     public static void main(String[] args) {
-        PercolationStats percolationStats = new PercolationStats(200,100);
+
+        PercolationStats percolationStats = new PercolationStats(20,1);
+
+
+        /*PercolationStats percolationStats = new PercolationStats(200,100);
+        System.out.println("mean                        = " + percolationStats.mean());
+        System.out.println("stddev                      = " + percolationStats.stddev());
+        System.out.println("95% confidence interval     = [" + percolationStats.confidenceLo() +
+                ", " + percolationStats.confidenceHi() + "]");
+        System.out.println("Algorithm runtime           = " + percolationStats.elapsedTime);
         System.out.println();
         percolationStats = new PercolationStats(200,100);
+        System.out.println("mean                        = " + percolationStats.mean());
+        System.out.println("stddev                      = " + percolationStats.stddev());
+        System.out.println("95% confidence interval     = [" + percolationStats.confidenceLo() +
+                ", " + percolationStats.confidenceHi() + "]");
+        System.out.println("Algorithm runtime           = " + percolationStats.elapsedTime);
         System.out.println();
         percolationStats = new PercolationStats(2,10000);
+        System.out.println("mean                        = " + percolationStats.mean());
+        System.out.println("stddev                      = " + percolationStats.stddev());
+        System.out.println("95% confidence interval     = [" + percolationStats.confidenceLo() +
+                ", " + percolationStats.confidenceHi() + "]");
+        System.out.println("Algorithm runtime           = " + percolationStats.elapsedTime);
         System.out.println();
         percolationStats = new PercolationStats(2,100000);
-
+        System.out.println("mean                        = " + percolationStats.mean());
+        System.out.println("stddev                      = " + percolationStats.stddev());
+        System.out.println("95% confidence interval     = [" + percolationStats.confidenceLo() +
+                ", " + percolationStats.confidenceHi() + "]");
+        System.out.println("Algorithm runtime           = " + percolationStats.elapsedTime);
+     */
     }
 }
